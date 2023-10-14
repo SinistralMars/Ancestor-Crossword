@@ -13,19 +13,23 @@ function Clue(props) {
   // Switches between clue and answer
   function handleContextMenu(event) {
     event.preventDefault();
-    setDisplayClue(!displayClue);
+    const transformedMap = new Map([...userFSData.entries()].map(([key, value]) => [value.name.compressedName, { key }]));
+    const foundPerson = transformedMap.get(word)
+    const realFoundPerson = userFSData.get(Object.values(foundPerson)[0])
+    if (foundPerson) {
+      setCurrentPerson(realFoundPerson);
+      setShowPersonInfo(true);
+    }
   }
 
   // Shows the person Modal when their name is clicked (little convoluted, maybe fix later)
   function handleNameClick() { 
-    if (!displayClue) {
-      const transformedMap = new Map([...userFSData.entries()].map(([key, value]) => [value.name.compressedName, { key }]));
-      const foundPerson = transformedMap.get(word)
-      const realFoundPerson = userFSData.get(Object.values(foundPerson)[0])
-      if (foundPerson) {
-        setCurrentPerson(realFoundPerson);
-        setShowPersonInfo(true);
-      }
+    const transformedMap = new Map([...userFSData.entries()].map(([key, value]) => [value.name.compressedName, { key }]));
+    const foundPerson = transformedMap.get(word)
+    const realFoundPerson = userFSData.get(Object.values(foundPerson)[0])
+    if (foundPerson) {
+      setCurrentPerson(realFoundPerson);
+      setShowPersonInfo(true);
     }
   }
 
