@@ -40,6 +40,16 @@ function shuffleString(inputString) {
   return characters.join(""); // Convert the shuffled array back to a string
 }
 
+function rot13(s) {
+  return s.replace(
+    /[A-Z]/gi,
+    (c) =>
+      "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm"[
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".indexOf(c)
+      ]
+  );
+}
+
 /*
 Potential question categories:
 
@@ -95,6 +105,9 @@ const questions = [
   },
   function (person) {
     return q9(person);
+  },
+  function (person) {
+    return q10(person);
   },
 ];
 
@@ -268,20 +281,43 @@ const q9 = function (person) {
   }
 };
 
+const q10 = function (person) {
+  if (person.name) {
+    var str = person.name.compressedName;
+    var shuffled = rot13(str);
+    return {
+      clue: "Crack the encryption: " + shuffled,
+      answer: person.name.compressedName,
+    };
+  } else {
+    return q0(person);
+  }
+};
+
 //rare questions
 
 // const rareQuestions = [
 //     function(person) { return r0(person); },
 // ]
 
-// const r0 = function(person) {
-//     if (person.deathPlace && person.lifespan.years) { return {
-//         clue: "This person died in " + person.deathPlace + " at the age of " + person.lifespan.years + ".",
-//         answer: person.name.compressedName,
-//     }} else {
-//         limit--; if (limit == 0) { return null; }
-//         return r0(person);
+// const r0 = function (person) {
+//   if (person.deathPlace && person.lifespan.years) {
+//     return {
+//       clue:
+//         "This person died in " +
+//         person.deathPlace +
+//         " at the age of " +
+//         person.lifespan.years +
+//         ".",
+//       answer: person.name.compressedName,
+//     };
+//   } else {
+//     limit--;
+//     if (limit == 0) {
+//       return null;
 //     }
-// }
+//     return r0(person);
+//   }
+// };
 
 // Question groupings

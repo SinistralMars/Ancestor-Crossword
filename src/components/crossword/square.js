@@ -47,9 +47,7 @@ function Square(props) {
           type="text"
           onChange={handleChange}
           onKeyDown={handleDownKey}
-          disabled={
-            key_character === "*" || key_character === "&"
-          }
+          disabled={key_character === "*" || key_character === "&"}
         ></input>
       </div>
     </>
